@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  flask:
+    build:
+      context: ./flask
+      dockerfile: Dockerfile
+    image: samzhou/flask-redis:latest
+    ports:
+      - "8080:5000"
+    environment:
+      - REDIS_HOST=redis-server
+      - REDIS_PASS=${REDIS_PASSWORD}
+
+  redis-server:
+    image: redis:latest
+    command: redis-server --requirepass ${REDIS_PASSWORD}
